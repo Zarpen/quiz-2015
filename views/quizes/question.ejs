@@ -1,28 +1,8 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title><%= title %></title>
-	</head>
-	<body>
-		<header>
-			<h1>Quiz: el juego de las preguntas</h1>
-		</header>
-		<main>
-			<section>
-				<form id="questionForm" name="questionForm" method="GET" action="answer">
-					<div>
-						<p>Pregunta. <%= question %></p>
-						<label for="question">Responda aquí: </label>
-						<input type="text" name="answer" />
-						<input type="submit" value="Enviar">
-					</div>
-				</form>
-				<p>
-					<a href="/">Volver al inicio</a>
-				</p>
-			</section>
-		</main>
-	</body>
-</html> 
- 
+<form method="GET" action="answer">
+	<div>
+		<p>Pregunta. <%= question %></p><br/>
+		<label for="question">Responda aquí: </label>
+		<input type="text" name="answer" />
+		<input type="submit" value="Enviar">
+	</div>
+</form>

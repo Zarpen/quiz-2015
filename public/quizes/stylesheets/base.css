@@ -1,0 +1,93 @@
+*{
+	margin:0;
+	padding:0;
+}
+html,body{
+  font-family: "roboto";
+  height: 100%;
+}
+input[type=text]{
+	border:2px solid #ccc; 
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+input[type=text]:focus{
+	border-color:#ff4040; 
+}
+input[type=submit]{
+	padding:0px 15px; background:#ccc; border:0 none;
+	cursor:pointer;
+	-webkit-border-radius: 5px;
+	border-radius: 5px; 
+}
+#page-wrap{
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -4em;
+}
+#content{
+	width: 50%;
+	margin:auto;
+}
+header{
+	padding: 2%;
+	background-color: #F7F7F7;
+}
+section{
+	font-family: "Helvetica";
+	padding: 2%;
+}
+footer{
+	padding: 1em;
+	background-color: #ccc;
+	height: 2em;
+}
+footer a{
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+	font-size: 0.8em;
+}
+footer a:hover{
+	color: #ff4040;
+}
+.push{
+	height: 2em;
+	background-color: white;
+}
+nav{
+	font-family: "roboto_slabbold";
+	background-color: #FF4040;
+	font-size: 1.1em;
+	padding-left: 20px;
+}
+nav ul{
+	list-style: none;
+	display:inline;
+}
+nav ul li{
+	float: left;
+	display:inline;
+}
+nav ul li a{
+	display: block;
+	padding: 10px;
+	text-decoration: none;
+	color: white;
+	background-color: #FF4040;
+}
+nav ul li a:hover{
+	color: #FF4040;
+	background-color: white;
+}
+a{
+  color: #00FFFF;
+}
+a:hover{
+  color: #7FFFD4;
+}
+.clear{
+	float:none;
+	clear: both;
+}

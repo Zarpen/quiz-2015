@@ -1,17 +1,31 @@
-var express = require('express');
 var indexRoutes = require('../routes/index.js');
-var app = express();
+var fs = require('fs');
 
-function Site(name,domain,dirPath,viewsPath){
-	this.name = name || "";
-	this.domain = domain || "localhost";
-	this.dirPath = dirPath || "public";
-	this.viewsPath = viewsPath || "views";
+function Site(options){
+	for(var key in options){
+		this[key] = options[key];
+	}
+
 	this.routes = [];
 	this.templates = {};
 	this.viewTemplate = {};
+	this.cssPath = "stylesheets/";
+	this.jsPath = "javascripts/";
+	this.imgPath = "images/";
+	this.fontPath = "fonts/";
 
-	this.setRoutes(indexRoutes[this.name]);
+	if(this.name){
+		this.setRoutes(indexRoutes[this.name]);
+	}
+
+	// read views (read views async ¿?)
+	if(this.viewsPath){
+		var dirViews = fs.readdirSync(__dirname+"/../views/"+this.viewsPath);
+		for(var i = 0;i < dirViews.length;i++){
+			var noExtension = dirViews[i].substr(0,dirViews[i].lastIndexOf("."));
+			this.addViewTemplate(noExtension,this.viewsPath+noExtension);
+		}
+	}
 }
 Site.prototype.addRoute = function(entry){
 	this.routes.push(entry);
@@ -61,10 +75,44 @@ Site.prototype.addViewTemplate = function(view,template){
 	this.viewTemplate[view] = template;
 };
 Site.prototype.parseView = function(options){
-	if(options.render){
-		options.response.render(this.viewTemplate[options.view],options.vars,options.handler);
+	var me = this;
+
+	if(options.partials){
+		var partialsLen = options.partials.length;
+		var varsToDelete = [];
+		var attachPartial = function(index){
+			if(index < partialsLen){
+				me.application.render(me.viewTemplate[options.partials[index]["view"]],options.partials[index]["vars"],function(err, html){
+					if(options.vars.hasOwnProperty(options.partials[index]["linkVar"]) === false){
+						options.vars[options.partials[index]["linkVar"]] = html;
+						varsToDelete.push(options.partials[index]["linkVar"]);
+					}
+					attachPartial(index+1);
+				});
+			}else{
+				if(options.render){
+					options.response.render(me.viewTemplate[options.view],options.vars,function(err,html){
+						for(var i = 0;i < varsToDelete.length;i++) delete options.vars[varsToDelete[i]];
+						if(options.handler) options.handler(err,html);
+						varsToDelete = [];
+						options.response.send(html);
+					});
+				}else{
+					me.application.render(me.viewTemplate[options.view],options.vars,function(err,html){
+						for(var i = 0;i < varsToDelete.length;i++) delete options.vars[varsToDelete[i]];
+						if(options.handler) options.handler(err,html);
+						varsToDelete = [];
+					});
+				}
+			}
+		}
+		attachPartial(0);
 	}else{
-		app.render(this.viewTemplate[options.view],options.vars,options.handler);
+		if(options.render){
+			options.response.render(this.viewTemplate[options.view],options.vars,options.handler);
+		}else{
+			this.application.render(this.viewTemplate[options.view],options.vars,options.handler);
+		}
 	}
 };
 

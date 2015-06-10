@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var vhost = require('vhost');
 var config = require('config');
+var partials = require('express-partials');
 // require core modules
 var ENTRY = require('./core/entryPoint');
 // require sites
@@ -17,15 +18,20 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// on render view, enabling this will integrate the view to default template (layout)
+// as we want different functionality left it commented
+// app.use(partials());
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 ENTRY.setSitesBasePath(__dirname+"/public/");
-ENTRY.addSite({"name":"quizes","site":new Quizes("quizes","localhost","quizes/","quizes/")});
+ENTRY.addSite({"name":"quizes","site":new Quizes({
+  application:app,name:"quizes",domain:"localhost",dirPath:"quizes/",viewsPath:"quizes/"})});
 ENTRY.addHtAccessEntry({"handler":function(req,res,next){
   var err = new Error('Not Found');
   err.status = 404;

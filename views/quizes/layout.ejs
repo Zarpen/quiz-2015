@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title><%= title %></title>
+		<%- header %>
+	</head>
+	<body>
+		<div id="page-wrap">
+			<header>
+				<h2>Quiz: el juego de las preguntas</h2>
+			</header>
+			<nav role="navigation">
+				<ul>
+					<li><a href="/">Inicio</a></li>
+					<li><a href="/quizes/question">Preguntas</a></li>
+				</ul>
+				<div class="clear"></div>
+			</nav>
+			<section id="content">
+				<%- body %>
+				<div class="push"></div>
+			</section>
+		</div>
+		<footer>
+			<a href="http://es.wikipedia.org/wiki/Quiz" target="_blank">¿Que es un Quiz?</a>
+		</footer>
+	</body>
+</html> 
