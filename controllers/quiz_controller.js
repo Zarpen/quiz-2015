@@ -6,9 +6,13 @@ function Quizes(options){
 	// TODO: add theme system to Site, maybe looking at constant partial html files
 	this.themes = {
 		base: "\
+			<meta name='viewport' content='width=device-width, initial-scale=1'>\
 			<link rel='stylesheet' type='text/css' href='"+this.fontPath+"roboto/stylesheet.css'>\
 			<link rel='stylesheet' type='text/css' href='"+this.fontPath+"roboto-slab/stylesheet.css'>\
 			<link rel='stylesheet' type='text/css' href='"+this.cssPath+"base.css'>\
+			<link rel='stylesheet' type='text/css' href='"+this.cssPath+"smartphone.css'>\
+			<link rel='stylesheet' type='text/css' href='"+this.cssPath+"widescreen.css'>\
+			<link rel='stylesheet' type='text/css' href='"+this.cssPath+"tablet.css'>\
 		"
 	};
 

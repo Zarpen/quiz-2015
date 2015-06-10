@@ -1,0 +1,22 @@
+@media only screen and (min-width: 530px) and (min-device-width: 481px){
+	#content{
+		width: 60%;
+		float:right;
+	}
+	nav{
+		width: 30%;
+		float:left;
+		text-align: center;
+	}
+	nav ul{
+		display: block;
+	}
+	nav ul li{
+		display: block;
+		float:none;
+	}
+	footer{
+		float:none;
+		clear:both;
+	}
+}
