@@ -53,6 +53,7 @@ footer a{
 	color: black;
 	font-weight: bold;
 	font-size: 0.8em;
+	padding:0% 1% 0% 1%;
 }
 footer a:hover{
 	color: #ff4040;
