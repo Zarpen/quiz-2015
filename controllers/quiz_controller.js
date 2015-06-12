@@ -16,12 +16,9 @@ function Quizes(options){
 		"
 	};
 
-	this.viewVars = {
-		layout: {header:this.themes.base},
-		index: {},
-		question: {question:"Capital de Italia"},
-		answer: {answer:""}
-	};
+	this.viewVars.layout = {title:"Quiz!",header:this.themes.base};
+	this.viewVars.question = {question:"Capital de Italia"};
+	this.viewVars.answer = {answer:""};
 }
 Quizes.prototype = new Site();
 Quizes.prototype.handlerIndex = function(req,res,next){
@@ -42,10 +39,16 @@ Quizes.prototype.handlerAnswer = function(req,res,next){
 	}else{
 		this.viewVars.answer.answer = "Incorrecto";
 	}
-	this.viewVars.layout.title = "Quizes - respuesta";
+	this.viewVars.layout.title = "Quizes - Respuesta";
 	this.parseView({view:"layout",render:true,response:res,vars:this.viewVars.layout,partials:[
 		{view:"answer",vars:this.viewVars.answer,linkVar:"body"}
 	]});
-}; 
+};
+Quizes.prototype.handlerAuthor = function(req,res,next){
+	this.viewVars.layout.title = "Quizes - Autor";
+	this.parseView({view:"layout",render:true,response:res,vars:this.viewVars.layout,partials:[
+		{view:"author",vars:this.viewVars.author,linkVar:"body"}
+	]});
+} 
 
 module.exports = Quizes;

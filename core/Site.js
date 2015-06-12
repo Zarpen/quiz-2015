@@ -9,6 +9,7 @@ function Site(options){
 	this.routes = [];
 	this.templates = {};
 	this.viewTemplate = {};
+	this.viewVars = {};
 	this.cssPath = "stylesheets/";
 	this.jsPath = "javascripts/";
 	this.imgPath = "images/";
@@ -24,6 +25,7 @@ function Site(options){
 		for(var i = 0;i < dirViews.length;i++){
 			var noExtension = dirViews[i].substr(0,dirViews[i].lastIndexOf("."));
 			this.addViewTemplate(noExtension,this.viewsPath+noExtension);
+			this.viewVars[noExtension] = {};
 		}
 	}
 }

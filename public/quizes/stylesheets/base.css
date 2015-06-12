@@ -20,6 +20,9 @@ input[type=submit]{
 	-webkit-border-radius: 5px;
 	border-radius: 5px; 
 }
+video{
+	margin: 5% 0% 5% 0%;
+}
 #page-wrap{
 	min-height: 100%;
 	height: auto !important;
@@ -91,6 +94,11 @@ a{
 }
 a:hover{
   color: #7FFFD4;
+}
+.wrap-left{
+	display:block;
+	float:left;
+	margin: 0% 5% 0% 0%;
 }
 .clear{
 	float:none;
