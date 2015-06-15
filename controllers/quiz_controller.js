@@ -21,7 +21,7 @@ function Quizes(options){
 	};
 
 	this.dbHelper.setup({connectString:process.env.DATABASE_URL,
-		storage:__dirname+"/../databases/"+this.databasePath+process.env.DATABASE_STORAGE,modelsPath:this.modelsPath});
+		storage:process.env.DATABASE_STORAGE ? __dirname+"/../databases/"+this.databasePath+process.env.DATABASE_STORAGE : null,modelsPath:this.modelsPath});
 	this.dbHelper.connect().then(function(){
 		anchor.dbHelper.getModel("quizes").findOrCreate({where:{respuesta:"Roma"},defaults:{pregunta:"Capital de Italia",respuesta:"Roma"}});
 	}).catch(function(e){ console.log("Database error "+e); });

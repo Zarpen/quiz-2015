@@ -20,7 +20,6 @@ DBHelper.prototype.setup = function(options){
 		this.config.port = parameters[5]||null;
 		this.config.host = parameters[4]||null;
 	}
-	console.log(this.config);
 }
 DBHelper.prototype.connect = function(){
 	var database = this.config["database"] || null;
