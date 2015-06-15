@@ -1,0 +1,5 @@
+<table>
+	<% var i; for(i = 0;i < quizes.length;i++){ %>
+		<tr><td><a href="<%= quizes[i].dataValues.id %>"><%= quizes[i].dataValues.pregunta %></a></td></tr>
+	<% } %>	
+</table>

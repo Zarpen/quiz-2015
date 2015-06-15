@@ -17,10 +17,15 @@ function Site(options){
 	this.dbHelper = false;
 
 	if(this.name){
+		this.domain = this.domain ? this.domain : "localhost";
+		this.protocol = this.protocol ? this.protocol : "http";
+		this.port = this.port ? this.port : "";
 		this.dirPath = this.dirPath ? this.dirPath : options.name+"/";
 		this.viewsPath = this.viewsPath ? this.viewsPath : options.name+"/";
 		this.modelsPath = this.modelsPath ? this.modelsPath : options.name+"/";
 		this.databasePath = this.databasePath ? this.databasePath : options.name+"/";
+		this.sitePath = this.sitePath ? this.sitePath : this.protocol+"://"+this.domain+(this.port ? ":"+this.port : "")
+			+"/"+this.dirPath;
 		this.setRoutes(indexRoutes[this.name]);
 	}
 

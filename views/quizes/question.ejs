@@ -1,6 +1,6 @@
-<form method="GET" action="answer">
+<form method="GET" action="<%= question.id %>/answer">
 	<div>
-		<p>Pregunta. <%= question %></p><br/>
+		<p>Pregunta. <%= question.pregunta %></p><br/>
 		<label for="question">Responda aquí: </label>
 		<input type="text" name="answer" />
 		<input type="submit" value="Enviar">
