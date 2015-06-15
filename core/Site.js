@@ -14,8 +14,13 @@ function Site(options){
 	this.jsPath = "javascripts/";
 	this.imgPath = "images/";
 	this.fontPath = "fonts/";
+	this.dbHelper = false;
 
 	if(this.name){
+		this.dirPath = this.dirPath ? this.dirPath : options.name+"/";
+		this.viewsPath = this.viewsPath ? this.viewsPath : options.name+"/";
+		this.modelsPath = this.modelsPath ? this.modelsPath : options.name+"/";
+		this.databasePath = this.databasePath ? this.databasePath : options.name+"/";
 		this.setRoutes(indexRoutes[this.name]);
 	}
 

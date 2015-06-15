@@ -30,8 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 ENTRY.setSitesBasePath(__dirname+"/public/");
-ENTRY.addSite({"name":"quizes","site":new Quizes({
-  application:app,name:"quizes",domain:"localhost",dirPath:"quizes/",viewsPath:"quizes/"})});
+ENTRY.addSite({"name":"quizes","site":new Quizes({application:app,name:"quizes",domain:"localhost"})});
 ENTRY.addHtAccessEntry({"handler":function(req,res,next){
   var err = new Error('Not Found');
   err.status = 404;

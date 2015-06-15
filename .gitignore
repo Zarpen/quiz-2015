@@ -28,3 +28,9 @@ node_modules
 
 # UNIX
 .directory
+
+# Databases
+*.sqlite
+
+# Environment
+.env
