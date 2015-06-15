@@ -34,6 +34,7 @@ var entry = (function(){
       var siteDomain = sites[site].getDomain();
       var siteDirPath = sites[site].getDirPath();
       var siteRouter = express.Router();
+      siteRouter.get("*",(function(theSite){ return function(req,res,next){ theSite.setOptions(req); next(); }})(sites[site]));
       for(var i = 0;i < siteRoutes.length;i++){
         var siteRoute = siteRoutes[i];
         siteRouter[siteRoute["type"]](siteRoute["path"],typeof siteRoute["handler"] 

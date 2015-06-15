@@ -10,7 +10,6 @@ function Quizes(options){
 	// TODO: add theme system to Site, maybe looking at constant partial html files
 	this.themes = {
 		base: "\
-			<base href='"+this.sitePath+"'>\
 			<meta name='viewport' content='width=device-width, initial-scale=1'>\
 			<link rel='stylesheet' type='text/css' href='"+this.fontPath+"roboto/stylesheet.css'>\
 			<link rel='stylesheet' type='text/css' href='"+this.fontPath+"roboto-slab/stylesheet.css'>\
@@ -28,7 +27,7 @@ function Quizes(options){
 		anchor.dbHelper.getModel("quizes").findOrCreate({where:{respuesta:"Lisboa"},defaults:{pregunta:"Capital de Portugal",respuesta:"Lisboa"}});
 	}).catch(function(e){ console.log("Database error "+e); });
 
-	this.viewVars.layout = {title:"Quiz!",header:this.themes.base};
+	this.viewVars.layout = {title:"Quiz!",header:this.themes.base,base:function(){ return anchor.getSitePath.apply(anchor,arguments);}};
 	this.viewVars.question = this.viewVars.answer = this.viewVars.quizes = {};
 }
 Quizes.prototype = new Site();

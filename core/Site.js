@@ -24,8 +24,6 @@ function Site(options){
 		this.viewsPath = this.viewsPath ? this.viewsPath : options.name+"/";
 		this.modelsPath = this.modelsPath ? this.modelsPath : options.name+"/";
 		this.databasePath = this.databasePath ? this.databasePath : options.name+"/";
-		this.sitePath = this.sitePath ? this.sitePath : this.protocol+"://"+this.domain+(this.port ? ":"+this.port : "")
-			+"/"+this.dirPath;
 		this.setRoutes(indexRoutes[this.name]);
 	}
 
@@ -45,6 +43,10 @@ Site.prototype.addRoute = function(entry){
 Site.prototype.getRoutes = function(){
 	return this.routes;
 };
+Site.prototype.setOptions = function(req){
+	// TODO: handle more options here (req.socket.localPort for port)
+	this.protocol = req.protocol;
+}
 Site.prototype.setRoutes = function(routes){
 	this.routes = routes;
 };
@@ -59,6 +61,9 @@ Site.prototype.getDirPath = function(){
 }
 Site.prototype.getViewsPath = function(){
 	return this.viewsPath;
+}
+Site.prototype.getSitePath = function(){
+	return this.protocol+"://"+this.domain+(this.port ? ":"+this.port : "")+"/"+this.dirPath;
 }
 Site.prototype.addPageTemplate = function(page,template){
 	if(this.templates[page]){
