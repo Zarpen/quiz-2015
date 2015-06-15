@@ -48,8 +48,11 @@ Quizes.prototype.handlerIndex = function(req,res,next){
 };
 Quizes.prototype.handlerQuizes = function(req,res,next){
 	var anchor = this;
+	var search = req.query.search;
 	this.viewVars.layout.title = "Quiz - Preguntas";
-	this.dbHelper.getModel("quizes").findAll().then(function(quizes){
+	this.dbHelper.getModel("quizes").findAll(search ? 
+		{where:["pregunta like ?","%"+search.replace(" ","%")+"%"],
+		order:[["pregunta","ASC"]]} : {order:[["pregunta","ASC"]]}).then(function(quizes){
 		anchor.viewVars.quizes.quizes = quizes;
 		anchor.parseView({view:"layout",render:true,response:res,vars:anchor.viewVars.layout,partials:[
 			{view:"quizes",vars:anchor.viewVars.quizes,linkVar:"body"}

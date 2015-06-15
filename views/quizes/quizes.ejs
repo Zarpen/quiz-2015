@@ -1,5 +1,17 @@
-<table>
-	<% var i; for(i = 0;i < quizes.length;i++){ %>
-		<tr><td><a href="<%= quizes[i].dataValues.id %>"><%= quizes[i].dataValues.pregunta %></a></td></tr>
-	<% } %>	
-</table>
+<div>
+	<div>
+		<form method="GET" action="">
+			<label for="search">Buscar pregunta: </label>
+			<input type="text" name="search" />
+			<input type="submit" value="Buscar">
+		</form>
+		<br/><hr/><br/>
+	</div>
+	<div>
+		<table>
+		<% var i; for(i = 0;i < quizes.length;i++){ %>
+			<tr><td><a href="<%= quizes[i].dataValues.id %>"><%= quizes[i].dataValues.pregunta %></a></td></tr>
+		<% } %>	
+		</table>
+	</div>
+</div>
