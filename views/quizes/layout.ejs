@@ -20,6 +20,14 @@
 				<div class="clear"></div>
 			</nav>
 			<section id="content">
+				<% if(errors.length){ %>
+					<span id="ErrorMsgs">
+						Corregir errores:<br/>
+						<% for(var i in errors){ %>
+								<span><%= errors[i].message %></span><br/>
+						<% } %>
+					</span><br/>
+				<% } %>
 				<%- body %>
 				<div class="push"></div>
 			</section>

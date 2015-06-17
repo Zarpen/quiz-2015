@@ -24,6 +24,8 @@ function Site(options){
 		this.viewsPath = this.viewsPath ? this.viewsPath : options.name+"/";
 		this.modelsPath = this.modelsPath ? this.modelsPath : options.name+"/";
 		this.databasePath = this.databasePath ? this.databasePath : options.name+"/";
+		this.migrationPath = this.migrationPath ? this.migrationPath : options.name+"/migrations/";
+		this.migrationExt = this.migrationExt ? this.migrationExt : "js";
 		this.setRoutes(indexRoutes[this.name]);
 	}
 

@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var vhost = require('vhost');
 var config = require('config');
 var partials = require('express-partials');
+var methodOverride = require('method-override');
 // require core modules
 var ENTRY = require('./core/entryPoint');
 // require sites
@@ -26,8 +27,9 @@ app.set('view engine', 'ejs');
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 //app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+app.use(methodOverride("_method"));
 
 ENTRY.setSitesBasePath(__dirname+"/public/");
 ENTRY.addSite({"name":"quizes","site":new Quizes({application:app,name:"quizes",domain:"localhost",port:5000})});

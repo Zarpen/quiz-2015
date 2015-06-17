@@ -1,6 +1,7 @@
 var path = require('path');
 var Sequelize = require('sequelize');
 var fs = require('fs');
+var Umzug = require('umzug');
 
 function DBHelper(){
 	this.config = {};
@@ -40,6 +41,21 @@ DBHelper.prototype.connect = function(){
 }
 DBHelper.prototype.getModel = function(name){
 	return this.models[name];
+}
+DBHelper.prototype.getMigrator = function(){
+	var reg = new RegExp("\."+this.config["migrationExt"]+"$");
+	var migrator = new Umzug({
+		storage: 'sequelize',
+		storageOptions: {
+        	sequelize: this.sequelize,
+    	},
+		migrations:{
+			params: [this.sequelize.getQueryInterface(), this.sequelize.constructor],
+			path: __dirname + '/../databases/'+this.config["migrationPath"],
+			pattern: reg
+		}
+	});
+	return migrator;
 }
 
 module.exports = DBHelper;

@@ -8,10 +8,37 @@
 		<br/><hr/><br/>
 	</div>
 	<div>
-		<table>
-		<% var i; for(i = 0;i < quizes.length;i++){ %>
-			<tr><td><a href="<%= quizes[i].dataValues.id %>"><%= quizes[i].dataValues.pregunta %></a></td></tr>
-		<% } %>	
+		<a href="new"><button type="button">Crear pregunta</button></a><br/><br/>
+		<table class="quizes-table">
+			<tr>
+				<th width="70%">Pregunta</th>
+				<th width="20%">Temática</th>
+				<th width="10%" colspan="2"></th>
+			</tr>
+		<%  var i; 
+			for(i = 0;i < quizes.length;i++){
+				var oldValue = quizes[i].dataValues.tematica;
+				switch(quizes[i].dataValues.tematica){
+					case "otro": quizes[i].dataValues.tematica = "Otro";break;
+					case "humanidades": quizes[i].dataValues.tematica = "Humanidades";break;
+					case "ocio": quizes[i].dataValues.tematica = "Ocio";break;
+					case "ciencia": quizes[i].dataValues.tematica = "Ciencia";break;
+					case "tecnologia": quizes[i].dataValues.tematica = "Tecnología";break;
+				}
+		%>
+			<tr>
+				<td width="70%"><a href="<%= quizes[i].dataValues.id %>"><%= quizes[i].dataValues.pregunta %></a></td>
+				<td width="20%"><em><%= quizes[i].dataValues.tematica %></em></td>
+				<td class="table-action"><a href="<%= quizes[i].dataValues.id %>/edit"><button type="button">Editar</button></a></td>
+				<td class="table-action">
+					<form method="post" action="<%= quizes[i].dataValues.id %>?_method=delete">
+						<input type="submit" value="Borrar" onclick="return confirm('Borrar: <%= quizes[i].dataValues.pregunta %>');">
+					</form>
+				</td>
+			</tr>
+		<% 
+			quizes[i].dataValues.tematica = oldValue;
+		} %>	
 		</table>
 	</div>
 </div>

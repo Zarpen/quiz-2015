@@ -1,0 +1,14 @@
+<label for="question">Pregunta:</label>
+<input type="text" id="question" name="quiz[pregunta]" value="<%= quiz.pregunta %>" /><br/><br/>
+<label for="answer">Respuesta:</label>
+<input type="text" id="answer" name="quiz[respuesta]" value="<%= quiz.respuesta %>" /><br/><br/>
+<label for="theme">Temática:</label>
+ <select id="theme" name="quiz[tematica]">
+  <option value="otro" selected>Otro</option>
+  <option value="humanidades">Humanidades</option>
+  <option value="ocio">Ocio</option>
+  <option value="ciencia">Ciencia</option>
+  <option value="tecnologia">Tecnología</option>
+</select><br/><br/>
+<a href=""><button type="button">Cancelar</button></a>
+<input type="submit" value="Guardar" />

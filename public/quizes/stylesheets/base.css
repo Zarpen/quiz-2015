@@ -14,7 +14,7 @@ input[type=text]{
 input[type=text]:focus{
 	border-color:#ff4040; 
 }
-input[type=submit]{
+button,input[type=submit]{
 	padding:0px 15px; background:#ccc; border:0 none;
 	cursor:pointer;
 	-webkit-border-radius: 5px;
@@ -22,6 +22,15 @@ input[type=submit]{
 }
 video{
 	margin: 5% 0% 5% 0%;
+}
+th,td{
+	text-align: center;
+}
+.quizes-table{
+	width: 100%;
+}
+.table-action{
+	width: 5%;
 }
 #page-wrap{
 	min-height: 100%;
@@ -38,6 +47,9 @@ video{
 	padding: 2%;
 	background-color: #F7F7F7;
 	text-align: center;
+}
+#ErrorMsgs{
+	color: red;
 }
 header{
 	padding: 2% 0 2% 0;

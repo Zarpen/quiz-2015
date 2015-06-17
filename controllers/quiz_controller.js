@@ -21,14 +21,19 @@ function Quizes(options){
 	};
 
 	this.dbHelper.setup({connectString:process.env.DATABASE_URL,
-		storage:process.env.DATABASE_STORAGE ? __dirname+"/../databases/"+this.databasePath+process.env.DATABASE_STORAGE : null,modelsPath:this.modelsPath});
+		storage:process.env.DATABASE_STORAGE ? __dirname+"/../databases/"+this.databasePath+process.env.DATABASE_STORAGE : null,modelsPath:this.modelsPath,
+		migrationPath:this.migrationPath,migrationExt:this.migrationExt});
 	this.dbHelper.connect().then(function(){
-		anchor.dbHelper.getModel("quizes").findOrCreate({where:{respuesta:"Roma"},defaults:{pregunta:"Capital de Italia",respuesta:"Roma"}});
-		anchor.dbHelper.getModel("quizes").findOrCreate({where:{respuesta:"Lisboa"},defaults:{pregunta:"Capital de Portugal",respuesta:"Lisboa"}});
+		anchor.dbHelper.getMigrator().up().then(function(migrations){
+			console.log("Database: migrations executed");
+			if(migrations && migrations.length) for(var i = 0;i < migrations.length;i++) console.log(migrations[i].file);
+			anchor.dbHelper.getModel("quizes").findOrCreate({where:{respuesta:"Roma"},defaults:{pregunta:"Capital de Italia",respuesta:"Roma",tematica:"Otro"}});
+			anchor.dbHelper.getModel("quizes").findOrCreate({where:{respuesta:"Lisboa"},defaults:{pregunta:"Capital de Portugal",respuesta:"Lisboa",tematica:"Otro"}});
+		}).catch(function(e){ console.log("Database migration error "+e); });
 	}).catch(function(e){ console.log("Database error "+e); });
 
-	this.viewVars.layout = {title:"Quiz!",header:this.themes.base,base:function(){ return anchor.getSitePath.apply(anchor,arguments);}};
-	this.viewVars.question = this.viewVars.answer = this.viewVars.quizes = {};
+	this.viewVars.layout = {title:"Quiz!",header:this.themes.base,base:function(){ return anchor.getSitePath.apply(anchor,arguments);},errors:""};
+	this.viewVars.question = this.viewVars.answer = this.viewVars.quizes = this.viewVars.newquiz = this.viewVars.editquiz = {};
 }
 Quizes.prototype = new Site();
 Quizes.prototype.handlerLoad = function(req,res,next,quizid){
@@ -45,6 +50,65 @@ Quizes.prototype.handlerIndex = function(req,res,next){
 		{view:"index",vars:this.viewVars.index,linkVar:"body"}
 	]});
 };
+Quizes.prototype.handlerNewQuiz = function(req,res,next){
+	var anchor = this;
+	var quiz = this.dbHelper.getModel("quizes").build(
+		{pregunta:"pregunta",respuesta:"respuesta",tematica:"temática"}
+	);
+	this.viewVars.newquiz.quiz = quiz;
+	anchor.parseView({view:"layout",render:true,response:res,vars:anchor.viewVars.layout,partials:[
+		{view:"newquiz",vars:anchor.viewVars.newquiz,linkVar:"body"}
+	]});
+}
+Quizes.prototype.handlerCreateQuiz = function(req,res,next){
+	var anchor = this;
+	var quiz = this.dbHelper.getModel("quizes").build(req.body.quiz);
+	quiz.validate().then(function(err){
+		if(err){
+			anchor.viewVars.newquiz.quiz = quiz;
+			anchor.viewVars.layout.errors = err.errors;
+			anchor.parseView({view:"layout",render:true,response:res,vars:anchor.viewVars.layout,partials:[
+				{view:"newquiz",vars:anchor.viewVars.newquiz,linkVar:"body"}
+			],handler:function(){ anchor.viewVars.layout.errors = ""; }});
+		}else{
+			quiz.save({fields: ["pregunta","respuesta","tematica"]}).then(function(){
+				res.redirect("/quizes");
+			});
+		}
+	});
+}
+Quizes.prototype.handlerEditQuiz = function(req,res,next){
+	var anchor = this;
+	this.viewVars.editquiz.quiz = req.quiz;
+	anchor.parseView({view:"layout",render:true,response:res,vars:anchor.viewVars.layout,partials:[
+		{view:"editquiz",vars:anchor.viewVars.editquiz,linkVar:"body"}
+	]});
+}
+Quizes.prototype.handlerUpdateQuiz = function(req,res,next){
+	var anchor = this;
+	req.quiz.pregunta = req.body.quiz.pregunta;
+	req.quiz.respuesta = req.body.quiz.respuesta;
+	req.quiz.tematica = req.body.quiz.tematica;
+	req.quiz.validate().then(function(err){
+		if(err){
+			anchor.viewVars.editquiz.quiz = req.quiz;
+			anchor.viewVars.layout.errors = err.errors;
+			anchor.parseView({view:"layout",render:true,response:res,vars:anchor.viewVars.layout,partials:[
+				{view:"editquiz",vars:anchor.viewVars.editquiz,linkVar:"body"}
+			],handler:function(){ anchor.viewVars.layout.errors = ""; }});
+		}else{
+			req.quiz.save({fields: ["pregunta","respuesta","tematica"]}).then(function(){
+				res.redirect("/quizes");
+			});
+		}
+	});
+}
+Quizes.prototype.handlerDestroyQuiz = function(req,res,next){
+	var anchor = this;
+	req.quiz.destroy().then(function(){
+		res.redirect("/quizes");
+	}).catch(function(error){ next(error); });
+}
 Quizes.prototype.handlerQuizes = function(req,res,next){
 	var anchor = this;
 	var search = req.query.search;
