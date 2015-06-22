@@ -35,9 +35,18 @@ DBHelper.prototype.connect = function(){
 			var noExtension = dirModels[i].substr(0,dirModels[i].lastIndexOf("."));
 			this.models[noExtension] = this.sequelize.import(path.join(__dirname+"/../models/"+this.config["modelsPath"],noExtension));
 		}
+		for(var model in this.models){
+			this.models[model].glue(this.models);
+		}
+		for(var model in this.models){
+			this.models[model] = this.models[model].model;
+		}
 	}
 
 	return this.sequelize.sync();
+}
+DBHelper.prototype.getSequelize = function(){
+	return this.sequelize;
 }
 DBHelper.prototype.getModel = function(name){
 	return this.models[name];

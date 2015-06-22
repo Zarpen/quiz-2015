@@ -86,8 +86,12 @@ nav ul{
 	list-style: none;
 	display:inline;
 }
-nav ul li{
+nav .menu-left li{
 	float: left;
+	display:inline;
+}
+nav .menu-right li{
+	float: right;
 	display:inline;
 }
 nav ul li a{

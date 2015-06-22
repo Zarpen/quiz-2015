@@ -34,16 +34,23 @@ var entry = (function(){
       var siteDomain = sites[site].getDomain();
       var siteDirPath = sites[site].getDirPath();
       var siteRouter = express.Router();
-      siteRouter.get("*",(function(theSite){ return function(req,res,next){ theSite.setOptions(req); next(); }})(sites[site]));
+      siteRouter.get("*",(function(theSite){ return function(req,res,next){ theSite.setOptions(req,res,next); }})(sites[site]));
       for(var i = 0;i < siteRoutes.length;i++){
         var siteRoute = siteRoutes[i];
         siteRouter[siteRoute["type"]](siteRoute["path"],typeof siteRoute["handler"] 
           === 'function' ? siteRoute["handler"] : 
             (function(theSite,theHandler){
               return function(req,res,next){ 
-                try{theSite[theHandler].apply(theSite,arguments);}catch(err){ next(err); } 
+                try{
+                  if(!req.path.match(/\/login|\/logout|\/sigin/)){
+                    if(req.session){
+                      req.session.redir = req.path;
+                    }
+                  }
+                  theSite[theHandler].apply(theSite,arguments);}catch(err){ return next(err); 
+                } 
               }
-            })(sites[site],"handler"+siteRoute["handler"]));
+            })(sites[site],siteRoute["plugin"]+"_handler"+siteRoute["handler"]));
       }
 
       app.use(vhost(siteDomain,siteRouter));
@@ -54,7 +61,7 @@ var entry = (function(){
     // HtAccessPaths (over default site)
     for(var i = 0;i < routes.length;i++){
       if(routes[i]["path"]){
-        app.use(routes[i]["path"],function(req,res,next){ next(); });
+        app.use(routes[i]["path"],function(req,res,next){ return next(); });
         app[routes[i]["type"]](routes[i]["path"],routes[i]["handler"]);
       }
     }

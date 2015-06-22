@@ -12,10 +12,19 @@
 				<h2>Quiz: el juego de las preguntas</h2>
 			</header>
 			<nav role="navigation">
-				<ul>
+				<ul class="menu-left">
 					<li><a href="/">Inicio</a></li>
 					<li><a href="/quizes">Preguntas</a></li>
 					<li><a href="/author">Autor</a></li>
+					<li><a href="/quizes/statistics">Estadísticas</a></li>
+				</ul>
+				<ul class="menu-right">
+					<% if(!_auth){ %>
+						<li><a href="/login">LogIn</a></li>
+					<% }else{ %>
+						<li><a href="/logout">LogOut</a></li>
+					<% }%>
+					<li><a href="/sigin">Registro</a></li>
 				</ul>
 				<div class="clear"></div>
 			</nav>

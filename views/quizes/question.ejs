@@ -1,8 +1,27 @@
 <form method="GET" action="<%= question.id %>/answer">
 	<div>
 		<p>Pregunta. <%= question.pregunta %></p><br/>
+		<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 		<label for="question">Responda aquí: </label>
 		<input type="text" name="answer" />
 		<input type="submit" value="Enviar">
 	</div>
-</form>
+</form><br/>
+<p><a href="/quizes/<%= question.id %>/comments/new"><button>Nuevo comentario</button></a></p><br/>
+<p><strong>Comentarios:</strong></p>
+<%for(index in question.Comments){%>
+	<% if(question.Comments[index].publicado || _auth){ %>
+		<p>- <%=question.Comments[index].texto%></p>
+		<% if(_auth && !question.Comments[index].publicado){ %>
+			<form method="post" action="/quizes/<%= question.id %>/comments/<%= question.Comments[index].id %>/publish?_method=put">
+				<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+				<input type="submit" value="Publicar" onclick="return confirm('¿Seguro que desea publicar el comentario?');">
+			</form>
+		<% }else if(_auth && question.Comments[index].publicado){ %>
+			<form method="post" action="/quizes/<%= question.id %>/comments/<%= question.Comments[index].id %>/unpublish?_method=put">
+				<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+				<input type="submit" value="Despublicar" onclick="return confirm('¿Seguro que desea despublicar el comentario?');">
+			</form>
+		<% } %>
+	<% } %>
+<%}%>

@@ -10,9 +10,16 @@
 	nav ul{
 		display: inline;
 	}
-	nav ul li{
-		display: inline;
+	nav .menu-left li{
+		display:inline;
 		float:left;
+	}
+	nav .menu-right li{
+		display:inline;
+		float:right;
+	}
+	.menu-right{
+		border-top:2px solid black;
 	}
 	footer{
 		float:none;

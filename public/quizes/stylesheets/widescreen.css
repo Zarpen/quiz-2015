@@ -11,12 +11,19 @@
 	nav ul{
 		display: block;
 	}
-	nav ul li{
-		display: block;
+	nav .menu-left li{
+		display:block;
+		float:none;
+	}
+	nav .menu-right li{
+		display:block;
 		float:none;
 	}
 	footer{
 		float:none;
 		clear:both;
+	}
+	.menu-right{
+		border-top:2px solid #ccc;
 	}
 }

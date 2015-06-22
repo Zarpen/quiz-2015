@@ -1,0 +1,10 @@
+LogIn: <br/><br/>
+<form method="post" action="/login">
+	<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+	<label for="email">Email:</label>
+	<input type="text" id="email" name="email" value="<%= user.email %>" /><br/><br/>
+	<label for="password">Contraseña:</label>
+	<input type="password" id="password" name="password" value="<%= user.password %>" /><br/><br/>
+	<a href=""><button type="button">Cancelar</button></a>
+	<input type="submit" value="LogIn" />
+</form> 

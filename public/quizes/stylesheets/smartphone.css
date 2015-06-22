@@ -1,15 +1,26 @@
-@media only screen and (max-width: 480px){
+@media only screen and (max-width: 529px){
 	#content{
 		width:90%;
+		margin-bottom: 10%;
 	}
 	nav ul{
 		display:block;
 	}
-	nav ul li{
+	nav .menu-left li{
 		display:block;
 		float:none;
 	}
+	nav .menu-right li{
+		display:block;
+		float:none;
+	}
+	.menu-right{
+		border-top:2px solid #ccc;
+	}
 	nav ul li a{
 		text-align: center;
-	} 
+	}
+	.quizes-table{
+		margin-bottom:10%;
+	}
 }

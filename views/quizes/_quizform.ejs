@@ -1,14 +1,15 @@
+<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 <label for="question">Pregunta:</label>
 <input type="text" id="question" name="quiz[pregunta]" value="<%= quiz.pregunta %>" /><br/><br/>
 <label for="answer">Respuesta:</label>
 <input type="text" id="answer" name="quiz[respuesta]" value="<%= quiz.respuesta %>" /><br/><br/>
 <label for="theme">Temática:</label>
- <select id="theme" name="quiz[tematica]">
-  <option value="otro" selected>Otro</option>
-  <option value="humanidades">Humanidades</option>
-  <option value="ocio">Ocio</option>
-  <option value="ciencia">Ciencia</option>
-  <option value="tecnologia">Tecnología</option>
+<select id="theme" name="quiz[tematica]">
+  <option value="otro" <% if(quiz.tematica === "otro"){ %> selected <% } %>>Otro</option>
+  <option value="humanidades" <% if(quiz.tematica === "humanidades"){ %> selected <% } %>>Humanidades</option>
+  <option value="ocio" <% if(quiz.tematica === "ocio"){ %> selected <% } %>>Ocio</option>
+  <option value="ciencia" <% if(quiz.tematica === "ciencia"){ %> selected <% } %>>Ciencia</option>
+  <option value="tecnologia" <% if(quiz.tematica === "tecnologia"){ %> selected <% } %>>Tecnología</option>
 </select><br/><br/>
 <a href=""><button type="button">Cancelar</button></a>
 <input type="submit" value="Guardar" />
