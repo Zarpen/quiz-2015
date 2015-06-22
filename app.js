@@ -55,6 +55,7 @@ ENTRY.addSite({"name":"quizes","site":new Quizes({
   application:app,name:"quizes",
   domain:"localhost",
   port:5000,
+  sslPort:8443,
   allowOrigin:"*",
   sessionInactive:2})});
 ENTRY.addHtAccessEntry({"handler":function(req,res,next){

@@ -24,6 +24,7 @@ function Site(options){
 		this.domain = this.domain ? this.domain : "localhost";
 		this.protocol = this.protocol ? this.protocol : "http";
 		this.port = this.port ? this.port : "";
+		this.sslPort = this.sslPort ? this.sslPort : "";
 		this.dirPath = this.dirPath ? this.dirPath : options.name+"/";
 		this.viewsPath = this.viewsPath ? this.viewsPath : options.name+"/";
 		this.modelsPath = this.modelsPath ? this.modelsPath : options.name+"/";
@@ -127,7 +128,8 @@ Site.prototype.getViewsPath = function(){
 	return this.viewsPath;
 }
 Site.prototype.getSitePath = function(){
-	return this.protocol+"://"+this.domain+(this.port ? ":"+this.port : "")+"/"+this.dirPath;
+	return this.protocol+"://"+this.domain+(this.protocol.indexOf("https") >= 0 ? 
+		(this.sslPort ? ":"+this.sslPort : "") : (this.port ? ":"+this.port : ""))+"/"+this.dirPath;
 }
 Site.prototype.addPageTemplate = function(page,template){
 	if(this.templates[page]){
