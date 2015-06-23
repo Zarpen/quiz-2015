@@ -69,6 +69,7 @@ Site.prototype.getRoutes = function(){
 Site.prototype.setOptions = function(req,res,next){
 	// TODO: handle more options here (req.socket.localPort for port)
 	this.protocol = req.protocol;
+	//if(req.headers['x-forwarded-proto']) this.protocol = req.headers['x-forwarded-proto']; // if behind trusted proxy
 
 	// set xsrf token
 	this.csrfToken = req.csrfToken();

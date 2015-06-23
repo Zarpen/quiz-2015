@@ -135,7 +135,7 @@ module.exports = {
 						user1.password = hash;
 						user1.save().then(function(){
 							user1.token = anchor.jwt.sign(user1, process.env.JWT_SECRET);
-							user1.save(function() {
+							user1.save().then(function() {
 								if(!req.body.api){
 									req.session.token = user1.token;
 									req.session.tokenExpire = (new Date()).getTime();
@@ -151,10 +151,10 @@ module.exports = {
 			                            token: user1.token
 			                        });
 								}
-		                    });
-						});
+		                    }).catch(function(e){ return next(new Error(e)); });
+						}).catch(function(e){ return next(new Error(e)); });
 					}
-				});
+				}).catch(function(e){ return next(new Error(e)); });
 	        }
 		}).catch(function(e){ return next(new Error(e)); });
 	}

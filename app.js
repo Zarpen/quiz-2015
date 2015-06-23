@@ -25,6 +25,8 @@ var csrfValue = function(req) {
 
 var app = express();
 
+//app.enable('trust proxy'); // if behind reverse proxy and want to trust enable
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
