@@ -1,5 +1,6 @@
 module.exports = {
 	handlerStatistics:function(req,res,next){
+		this.viewVars.layout.title = "Estadísticas";
 		var anchor = this;
 		var sequelize = this.dbHelper.getSequelize();
 		this.viewVars.statistics.statistics = {

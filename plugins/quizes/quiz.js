@@ -1,6 +1,7 @@
 module.exports = {
 	handlerNewQuiz:function(req,res,next){
 		var anchor = this;
+		this.viewVars.layout.title = "Quiz - Nueva Pregunta";
 		var quiz = this.dbHelper.getModel("quiz").build(
 			{pregunta:"pregunta",respuesta:"respuesta",tematica:"temática"}
 		);
@@ -28,6 +29,7 @@ module.exports = {
 	},
 	handlerEditQuiz:function(req,res,next){
 		var anchor = this;
+		this.viewVars.layout.title = "Quiz - Editar Pregunta";
 		this.viewVars.editquiz.quiz = req.quiz;
 		return anchor.parseView({view:"layout",render:true,response:res,vars:anchor.viewVars.layout,partials:[
 			{view:"editquiz",vars:anchor.viewVars.editquiz,linkVar:"body"}
