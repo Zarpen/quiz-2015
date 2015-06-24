@@ -9,7 +9,7 @@
 		<br/><hr/><br/>
 	</div>
 	<div>
-		<a href="new"><button type="button">Crear pregunta</button></a><br/><br/>
+		<% if(_auth){ %><a href="new"><button type="button">Crear pregunta</button></a><br/><br/><% } %>
 		<table class="quizes-table">
 			<tr>
 				<th width="70%">Pregunta</th>
