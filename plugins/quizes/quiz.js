@@ -29,36 +29,42 @@ module.exports = {
 	},
 	handlerEditQuiz:function(req,res,next){
 		var anchor = this;
-		this.viewVars.layout.title = "Quiz - Editar Pregunta";
-		this.viewVars.editquiz.quiz = req.quiz;
-		return anchor.parseView({view:"layout",render:true,response:res,vars:anchor.viewVars.layout,partials:[
-			{view:"editquiz",vars:anchor.viewVars.editquiz,linkVar:"body"}
-		]});
+		this.ensureAuthorizedACL({req:req,res:res,next:next,handler:function(req1,res1,next1){
+			anchor.viewVars.layout.title = "Quiz - Editar Pregunta";
+			anchor.viewVars.editquiz.quiz = req.quiz;
+			return anchor.parseView({view:"layout",render:true,response:res,vars:anchor.viewVars.layout,partials:[
+				{view:"editquiz",vars:anchor.viewVars.editquiz,linkVar:"body"}
+			]});
+		}});
 	},
 	handlerUpdateQuiz:function(req,res,next){
 		var anchor = this;
-		req.quiz.pregunta = req.body.quiz.pregunta;
-		req.quiz.respuesta = req.body.quiz.respuesta;
-		req.quiz.tematica = req.body.quiz.tematica;
-		req.quiz.validate().then(function(err){
-			if(err){
-				anchor.viewVars.editquiz.quiz = req.quiz;
-				anchor.viewVars.layout.errors = err.errors;
-				return anchor.parseView({view:"layout",render:true,response:res,vars:anchor.viewVars.layout,partials:[
-					{view:"editquiz",vars:anchor.viewVars.editquiz,linkVar:"body"}
-				],handler:function(){ anchor.viewVars.layout.errors = ""; }});
-			}else{
-				req.quiz.save({fields: ["pregunta","respuesta","tematica"]}).then(function(){
-					return res.redirect("/quizes");
-				});
-			}
-		});
+		this.ensureAuthorizedACL({req:req,res:res,next:next,handler:function(req1,res1,next1){
+			req.quiz.pregunta = req.body.quiz.pregunta;
+			req.quiz.respuesta = req.body.quiz.respuesta;
+			req.quiz.tematica = req.body.quiz.tematica;
+			req.quiz.validate().then(function(err){
+				if(err){
+					anchor.viewVars.editquiz.quiz = req.quiz;
+					anchor.viewVars.layout.errors = err.errors;
+					return anchor.parseView({view:"layout",render:true,response:res,vars:anchor.viewVars.layout,partials:[
+						{view:"editquiz",vars:anchor.viewVars.editquiz,linkVar:"body"}
+					],handler:function(){ anchor.viewVars.layout.errors = ""; }});
+				}else{
+					req.quiz.save({fields: ["pregunta","respuesta","tematica"]}).then(function(){
+						return res.redirect("/quizes");
+					});
+				}
+			});
+		}});
 	},
 	handlerDestroyQuiz:function(req,res,next){
 		var anchor = this;
-		req.quiz.destroy().then(function(){
-			return res.redirect("/quizes");
-		}).catch(function(error){ return next(error); });
+		this.ensureAuthorizedACL({req:req,res:res,next:next,handler:function(req1,res1,next1){
+			req.quiz.destroy().then(function(){
+				return res.redirect("/quizes");
+			}).catch(function(error){ return next(error); });
+		}});
 	},
 	handlerQuizes:function(req,res,next){
 		var anchor = this;

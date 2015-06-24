@@ -30,12 +30,14 @@
 			<tr>
 				<td width="70%"><a href="<%= quizes[i].dataValues.id %>"><%= quizes[i].dataValues.pregunta %></a></td>
 				<td width="20%"><em><%= quizes[i].dataValues.tematica %></em></td>
-				<td class="table-action"><a href="<%= quizes[i].dataValues.id %>/edit"><button type="button">Editar</button></a></td>
+				<td class="table-action"><% if(_auth){ %><a href="<%= quizes[i].dataValues.id %>/edit"><button type="button">Editar</button></a><% } %></td>
 				<td class="table-action">
-					<form method="post" action="<%= quizes[i].dataValues.id %>?_method=delete">
-						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
-						<input type="submit" value="Borrar" onclick="return confirm('Borrar: <%= quizes[i].dataValues.pregunta %>');">
-					</form>
+					<% if(_auth){ %> 
+						<form method="post" action="<%= quizes[i].dataValues.id %>?_method=delete">
+							<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+							<input type="submit" value="Borrar" onclick="return confirm('Borrar: <%= quizes[i].dataValues.pregunta %>');">
+						</form>
+					<% } %>
 				</td>
 			</tr>
 		<% 
